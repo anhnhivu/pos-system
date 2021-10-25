@@ -299,7 +299,7 @@
 
         // Append child <li> tag to OrderList
         const orderItem = newItemInCart(itemName, itemPrice, itemImage);
-        const orderButton = changeQuantityButton(itemName);
+        const orderButton = changeQuantityButton(itemName, 1);
         orderList.appendChild(orderItem);
         orderList.appendChild(orderButton);
         console.log(orderArray);
@@ -339,7 +339,7 @@
       return orderItem;
     };
 
-    function changeQuantityButton(itemName) {
+    function changeQuantityButton(itemName, itemAmount) {
       // Button
       const decrementButton = document.createElement('button');
       const incrementButton = document.createElement('button');
@@ -350,7 +350,7 @@
       amountItemSpan.className ="fw-bold ms-3";
       amountItemSpan.id = 'amount of ' + itemName;
       //console.log(amountItemSpan);
-      const amountItemText = document.createTextNode('1');
+      const amountItemText = document.createTextNode(itemAmount);
       //amountItemSpan.id = 
       amountItemSpan.appendChild(amountItemText);
 
@@ -377,10 +377,14 @@
       
       incrementButton.onclick = function() {
         const itemSpan = document.getElementById('amount of ' + itemName);
-        itemSpan.innerText = parseInt(itemSpan.innerText) + 1; //increment
+        itemSpan.innerText = parseInt(itemSpan.innerText) + 1; //increment        
 
         let i = 0;
         while (i < orderArray.length) {
+
+          console.log('debug');
+          console.log(itemName);
+          console.log(orderArray[i][0]);
           if (orderArray[i][0] === itemName) {
             orderArray[i][3]++;
             totalItems();
@@ -408,6 +412,9 @@
       orderButton.appendChild(decrementButton)
       orderButton.appendChild(amountItemSpan);
       orderButton.appendChild(incrementButton);
+
+      totalItems();
+      totalCost();
 
       return orderButton;
     };
@@ -465,7 +472,6 @@
       var indexNum = -1;
         while (i < orderArray.length) {
           if (orderArray[i][0] === itemName) {
-            orderArray[i][3]++;
             totalItems();
             totalCost();
             indexNum = i;
@@ -483,7 +489,7 @@
       orderArray.forEach( (order) => {
         //console.log(0);
         const orderItem = newItemInCart(order[0], order[1], order[2]);
-        const orderButton = changeQuantityButton(itemName);
+        const orderButton = changeQuantityButton(order[0], order[3]);
         orderList.appendChild(orderItem);
         orderList.appendChild(orderButton);
         console.log(orderArray);
@@ -491,7 +497,7 @@
       );
 
       console.log(orderArray);
-      //console.log(orderList);
+      console.log(orderList);
       totalItems();
       totalCost();
     }
