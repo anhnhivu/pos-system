@@ -1,2 +1,3 @@
-# pos-system
-Minimum Viable Product of a POS system for a restaurant.
+# Simple HTML and JavaScript Application
+
+This is the first demo of the project. 
